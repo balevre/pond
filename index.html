@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>POND | Fish Anywhere!</title>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 0;
+            font-family: "Helvetica";
+            position: absolute;
+            font-size: 12pt;
+            background-color: #5EA7D3;
+            color: white;
+        }
+        .search-input {
+            font-family:Courier
+        }
+        .search-input,
+        .leaflet-control-search {
+            max-width:400px;
+        }
+        
+    </style>
+
+    <style>body { padding: 0; margin: 0; } #map { height: 100%; width: 100vw; }</style>
+</head>
+
+<body>
+<div id = 'header'><h1><center>POND</center></h1>
+<p><center>Fish Anywhere!</center></p>
+</div>
+<div id='map'></div>
+
+<script>
+    
+    const map = L.map('map').fitWorld();
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    
+    var marker = L.marker([35.14642117582225, -81.84340961120085]).addTo(map);
+    var marker = L.marker([35.142931,  -81.849986]).addTo(map);
+
+    function onLocationFound(e) {
+        const radius = e.accuracy / 2;
+
+        const locationMarker = L.marker(e.latlng).addTo(map)
+            .bindPopup(`You are here!`).openPopup();
+    }
+
+    function onLocationError(e) {
+        alert(e.message);
+    }
+    
+    map.on('locationfound', onLocationFound);
+    map.on('locationerror', onLocationError);
+
+    map.locate({setView: true, maxZoom: 16});
+    map.addControl( new L.Control.Search({
+        url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+        jsonpParam: 'json_callback',
+        propertyName: 'display_name',
+        propertyLoc: ['lat','lon'],
+        marker: L.circleMarker([0,0],{radius:30}),
+        autoCollapse: true,
+        autoType: false,
+        minLength: 2
+    }) );
+    
+</script>
+
+
+
+</body>
+</html>
