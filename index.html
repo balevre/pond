@@ -23,7 +23,7 @@
         }
         
     </style>
-    <style>#map { height: 100vh; width: 100vw; }</style>
+    <style>#map { height: 80vh; width: 100vw; }</style>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
 
 <script>
     
-    const map = L.map('map').fitWorld().focus();
+    const map = L.map('map').fitWorld();
 
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
