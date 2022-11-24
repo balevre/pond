@@ -34,7 +34,7 @@
 
 <script>
     
-    const map = L.map('map').fitWorld();
+    const map = L.map('map').fitWorld().focus();
 
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
