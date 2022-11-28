@@ -11,7 +11,9 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <link rel="stylesheet" href="/Users/Balevre/Documents/GitHub/pond/leaflet-search.css" />
 
+   
     <style>
         html, body {
             height: 100%;
@@ -25,12 +27,13 @@
             background-color: #5EA7D3;
             color: white;
         }
+        
+        #map { height: 90%; width: 100vw;
+        }
+        
 
     </style>
-
-    <style>#map { padding: 0; margin: 0; } #map { height: 80%; width: 100vw; }</style>
 </head>
-
 <body>
 <div id = 'header'><h1><center>POND</center></h1>
 <p><center>Fish Anywhere!</center></p>
@@ -46,8 +49,20 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     
+
+    map.on('click', onMapClick);
+////The below are locations:
     var marker = L.marker([35.14642117582225, -81.84340961120085]).addTo(map);
     var marker = L.marker([35.142931,  -81.849986]).addTo(map);
+////the above are locations.
+    var popup = L.popup();
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+    }
+
 
     function onLocationFound(e) {
         const radius = e.accuracy / 2;
@@ -64,18 +79,17 @@
     map.on('locationerror', onLocationError);
 
     map.locate({setView: true, maxZoom: 16});
+    
     map.addControl( new L.Control.Search({
-        url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
-        jsonpParam: 'json_callback',
-        propertyName: 'display_name',
-        propertyLoc: ['lat','lon'],
-        marker: L.circleMarker([0,0],{radius:30}),
-        autoCollapse: true,
-        autoType: false,
-        minLength: 2
-    }) );
-    
-    
+            url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+            jsonpParam: 'json_callback',
+            propertyName: 'display_name',
+            propertyLoc: ['lat','lon'],
+            marker: L.circleMarker([0,0],{radius:30}),
+            autoCollapse: true,
+            autoType: false,
+            minLength: 2
+        }) );
     
 </script>
 
