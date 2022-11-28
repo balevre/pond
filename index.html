@@ -42,16 +42,13 @@
 <div id='map'></div>
 
 <script>
-    
     const map = L.map('map').fitWorld();
-
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     L.Control.geocoder().addTo(map);
     
-
     map.on('click', onMapClick);
 ////The below are locations:
     const ChesneePond = L.marker([35.14642117582225, -81.84340961120085]).addTo(map)
@@ -66,15 +63,14 @@
     const Random = L.marker([15.14642117582225, -89.84340961120085]).addTo(map)
                 .bindPopup('<b>Random</b><br><b>Prices:</b><br>Per Hour: $45 <br> 6 Hours: $125<br /> <a href="https://youtu.be/lAkuJXGldrM">Pay to fish here?</a> ').openPopup();
     
-    
 ////the above are locations.
 
-////To add a fishing location: use FORM; admin to add on  backend.
+////To add a fishing location: use E-FORM; admin to add on  backend.
     var popup = L.popup();
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
-            .setContent('<a href="https://youtu.be/lAkuJXGldrM">Create fishing location at this location?' + e.latlng.toString())
+            .setContent('<a href="https://www.youtube.com/watch?v=_WW2JWIv6G8">Create fishing location at this location?' + e.latlng.toString())
             .openOn(map);
     }
 
