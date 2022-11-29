@@ -29,14 +29,24 @@
             color: white;
         }
         
-        #map { height: 90%; width: 100vw;
+        #map { height: 100%; width: 100vw;
+            
         }
-        
+        .box{
+            position: absolute;
+            top: 25px;
+            z-index: 9999;
+            text-align: center;
+            width: 800px;
+            left: 50%;
+            margin-left: -450px; /* half of the width */
+            background-color:#5EA7D3;
+        }
 
     </style>
 </head>
 <body>
-<div id = 'header'><h1><center>POND</center></h1>
+<div class = 'box'><h1><center>POND</center></h1>
 <p><center>Fish Anywhere!</center></p>
 </div>
 <div id='map'></div>
@@ -68,12 +78,21 @@
     
 ////the above are locations.
 
+////To add a fishing location: use E-FORM; admin to add on  backend.
+    var popup = L.popup();
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent('<a href="https://www.youtube.com/watch?v=_WW2JWIv6G8">Create fishing location at this location?' + e.latlng.toString())
+            .openOn(map);
+    }
+
 
 function onLocationFound(e) {
     const radius = e.accuracy / 2;
 
     const locationMarker = L.marker(e.latlng).addTo(map)
-        .bindPopup(`You are here!`).openPopup();
+        .bindPopup(`You are near this location!`).openPopup();
 }
 
 function onLocationError(e) {
@@ -98,14 +117,6 @@ map.addControl( new L.Control.Search({
 
 
 
-////To add a fishing location: use E-FORM; admin to add on  backend.
-    var popup = L.popup();
-    function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent('<a href="https://www.youtube.com/watch?v=_WW2JWIv6G8">Create fishing location at this location?' + e.latlng.toString())
-            .openOn(map);
-    }
 
 
 
