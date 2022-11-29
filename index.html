@@ -32,32 +32,61 @@
         #map { height: 100%; width: 100vw;
             
         }
+        
         .box{
             position: absolute;
             top: 25px;
             z-index: 9999;
             text-align: center;
             width: 800px;
+            height: 150px;
             left: 50%;
-            margin-left: -450px; /* half of the width */
+            opacity: 0.95;
+            margin-left: -400px; /* half of the width */
             background-color:#5EA7D3;
+            -webkit-filter:blur(50px);
+            filter:blur(4px);
         }
-
-    </style>
+    
+        .textheader{
+            position: absolute;
+            top: 70px;
+            z-index: 9999;
+            text-align: center;
+            width: 800px;
+            height: 75px;
+            left: 50%;
+            opacity: 0.9;
+            margin-left: -400px; /* half of the width */
+            font-family: "Helvetica";
+            position: absolute;
+            font-size: 34pt;
+        }
+    
+</style>
 </head>
 <body>
-<div class = 'box'><h1><center>POND</center></h1>
-<p><center>Fish Anywhere!</center></p>
+<div class = 'box'></div>
+<div class = 'textheader'
+    <center><b>POND</b></center>
 </div>
 <div id='map'></div>
 
 <script>
-    const map = L.map('map').fitWorld();
+    const map = L.map('map', {
+        maxZoom: 20,
+        minZoom: 6,
+        zoomControl: false
+    });
+    
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     L.Control.geocoder().addTo(map);
+    L.control.zoom({
+        position: 'bottomright'
+    }).addTo(map);
     
     
     
@@ -110,17 +139,11 @@ map.addControl( new L.Control.Search({
         propertyName: 'display_name',
         propertyLoc: ['lat','lon'],
         marker: L.circleMarker([0,0],{radius:30}),
-        autoCollapse: true,
-        autoType: false,
+        autoCollapse: false,
+        autoType: true,
         minLength: 2
+        
     }) );
-
-
-
-
-
-
-    
 </script>
 
 
