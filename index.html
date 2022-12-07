@@ -40,18 +40,19 @@
             z-index: 9998;
             text-align: center;
             width: 100%;
-            height: 150px;
+            height: 95px;
             left: 0%;
             opacity: 0.95;
             margin-left: 0; /* half of the width */
             background-color:#5EA7D3;
             -webkit-filter:blur(50px);
             filter:blur(4px);
+            -webkit-background-size: cover;
         }
     
         .textheader{
             position: absolute;
-            top: 50px;
+            top: 20px;
             z-index: 9999;
             text-align: center;
             width: 800px;
@@ -80,7 +81,9 @@
         zoomControl: false
     });
     
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    
+    
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
@@ -91,11 +94,23 @@
         position: 'bottomright'
     }).addTo(map);
     
+    const streets = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    });
+
+
     
-    
-    
+    const baseLayers = {
+            'OpenStreetMap': osm,
+            'Streets': streets
+        };
+
+    const layerControl = L.control.layers(null, baseLayers, {position:'bottomleft'}).addTo(map);
+
     map.on('click', onMapClick);
-////The below are locations:
+    
+////The below are locations; each links to a payment site; site gives confirmation code to owner and user:
     const ChesneePond = L.marker([35.14642117582225, -81.84340961120085]).addTo(map)
                 .bindPopup('<b>Chesnee Pond</b><br><b>Prices:</b><br>Per Hour: $45 <br> 6 Hours: $125<br /> <a href="https://youtu.be/lAkuJXGldrM">Pay to fish here?</a> ').openPopup();
                 
@@ -108,7 +123,12 @@
     const Random = L.marker([15.14642117582225, -89.84340961120085]).addTo(map)
                 .bindPopup('<b>Random</b><br><b>Prices:</b><br>Per Hour: $45 <br> 6 Hours: $125<br /> <a href="https://youtu.be/lAkuJXGldrM">Pay to fish here?</a> ').openPopup();
     const cowFarmPond = L.marker([35.14288, -81.849883]).addTo(map)
-    .bindPopup('<b>Cow Farm Pond</b><br><b>Prices:</b><br>Per Hour: $25 <br> 6 Hours: $80<br /> <a href="https://youtu.be/lAkuJXGldrM">Pay to fish here?</a> ').openPopup();
+    .bindPopup('<b>Cow Farm Pond</b><br><b>Prices:</b><br>Per Hour: $25 <br> 6 Hours: $80<br /> <a href="https://youtu.be/KMU0tzLwhbE">Pay to fish here?</a> ').openPopup();
+    
+    const clover557Pond = L.marker([35.090795, -81.104357]).addTo(map)
+    .bindPopup('<b>Clover 557 Pond</b><br><b>Prices:</b><br>Per Hour: $25 <br> 6 Hours: $80<br /> <a href="https://youtu.be/KMU0tzLwhbE">Pay to fish here?</a> ').openPopup();
+    
+    
     
 ////the above are locations.
 
@@ -149,6 +169,7 @@ map.addControl( new L.Control.Search({
         minLength: 2
         
     }) );
+
 </script>
 
 
